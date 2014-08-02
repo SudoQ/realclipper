@@ -11,17 +11,17 @@ import (
 var clipboard string
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	//fmt.Fprintf(w, "Hi there I love %s!", r.URL.Path[1:])
 	switch r.Method {
 		case "GET":
-			log.Println("COPY")
-			fmt.Fprintf(w, "copy")
+			log.Printf("Copied %s\n", clipboard)
+			fmt.Fprintf(w, clipboard)
 		case "POST":
-			log.Println("PASTE")
 			buf:= new(bytes.Buffer)
 			buf.ReadFrom(r.Body)
 			s := buf.String()
-			fmt.Fprintf(w, s)
+			clipboard = s
+			log.Printf("Pasted %s\n", clipboard)
+			fmt.Fprintf(w, "ok")
 		default:
 			log.Println("Error")
 	}
