@@ -28,6 +28,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main(){
-	http.HandleFunc("/realclipper/api/v1.0/clipboard", handler)
+	http.HandleFunc("/realclipper/api/v0.1/clipboard", handler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
