@@ -5,11 +5,26 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
+	"os"
+	"fmt"
 )
 
 func main() {
+	// Read enviromental variables
+	host := os.Getenv("REALCLIPPER_API_HOST")
+	if host == "" {
+		host = "localhost"
+	}
+	port := os.Getenv("REALCLIPPER_API_PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	// Construct address
+	addr := fmt.Sprintf("http://%s:%s/realclipper/api/v0.1/clipboard", host, port)
+
 	// Get content
-	resp, err := http.Get("http://localhost:8080/realclipper/api/v0.1/clipboard")
+	resp, err := http.Get(addr)
 	if err != nil {
 		log.Println(err)
 		return
