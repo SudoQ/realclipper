@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"bytes"
+	"os"
 )
 
 
@@ -29,5 +30,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main(){
 	http.HandleFunc("/realclipper/api/v0.1/clipboard", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	env_port := os.Getenv("REALCLIPPER_API_PORT")
+	if env_port == "" {
+		env_port = "8080"
+	}
+	port := fmt.Sprintf(":%s", env_port)
+	log.Fatal(http.ListenAndServe(port, nil))
 }
