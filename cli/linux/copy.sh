@@ -11,4 +11,4 @@ if [ "$REALCLIPPER_API_PORT" != "" ]; then
 fi
 	
 #GET API request storing the response in the clipboard"
-curl -s --request GET $API_HOST:$API_PORT/realclipper/api/v0.1/clipboard | xclip -selection clipboard
+curl -s --request GET $API_HOST:$API_PORT/realclipper/api/clipboard | xclip -selection clipboard

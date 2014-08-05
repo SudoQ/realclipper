@@ -21,7 +21,7 @@ func main() {
 	}
 
 	// Construct address
-	addr := fmt.Sprintf("http://%s:%s/realclipper/api/v0.1/clipboard", host, port)
+	addr := fmt.Sprintf("http://%s:%s/realclipper/api/clipboard", host, port)
 
 	// Get content
 	resp, err := http.Get(addr)

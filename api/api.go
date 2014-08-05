@@ -29,7 +29,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main(){
-	http.HandleFunc("/realclipper/api/v0.1/clipboard", handler)
+	http.HandleFunc("/realclipper/api/clipboard", handler)
 	env_port := os.Getenv("REALCLIPPER_API_PORT")
 	if env_port == "" {
 		env_port = "8080"
