@@ -39,6 +39,9 @@ func ClipboardGroup(r martini.Router) {
 func CopyClipboard()(int, string) {
 }
 
+func PasteClipboard()(int, string) {
+}
+
 func main(){
 	m := martini.Classic()
 	//http.HandleFunc("/realclipper/api/clipboard", handler)
