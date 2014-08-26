@@ -1,14 +1,13 @@
 package main
 
 import (
-	"net/http"
-	"fmt"
-	"log"
 	"bytes"
+	"fmt"
 	"github.com/go-martini/martini"
+	"log"
+	"net/http"
 	"os"
 )
-
 
 var clipboard string
 
@@ -17,13 +16,13 @@ func ClipboardGroup(r martini.Router) {
 	r.Post("", PasteClipboard)
 }
 
-func CopyClipboard()(int, string) {
+func CopyClipboard() (int, string) {
 	log.Printf("Copied %s\n", clipboard)
 	return 200, clipboard
 }
 
 func PasteClipboard(w http.ResponseWriter, r *http.Request) {
-	buf:= new(bytes.Buffer)
+	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
 	s := buf.String()
 	clipboard = s
@@ -31,7 +30,7 @@ func PasteClipboard(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "ok")
 }
 
-func main(){
+func main() {
 	m := martini.Classic()
 	//http.HandleFunc("/realclipper/api/clipboard", handler)
 	m.Group("/realclipper/api/clipboard", ClipboardGroup)
