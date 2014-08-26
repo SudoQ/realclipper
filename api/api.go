@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"log"
 	"bytes"
+	"github.com/go-martini/martini"
+	"os"
 )
 
 
 var clipboard string
 
+/*
 func handler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 		case "GET":
@@ -26,9 +29,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			log.Println("Error")
 	}
 }
+*/
+
+func ClipboardGroup(r martini.Router) {
+	r.Get("/", CopyClipboard)
+	r.Post("/", PasteClipboard)
+}
 
 func main(){
-	http.HandleFunc("/realclipper/api/clipboard", handler)
+	m := martini.Classic()
+	//http.HandleFunc("/realclipper/api/clipboard", handler)
+	m.Group("/realclipper/api/clipboard", ClipboardGroup)
 	env_port := os.Getenv("REALCLIPPER_API_PORT")
 	if env_port == "" {
 		env_port = "8080"
