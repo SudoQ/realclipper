@@ -4,10 +4,47 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 		<title>Realclipper Web Service</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+		<script>
+			$(function(){
+				var URL ="http://localhost:4041/realclipper/api/clipboard";
+				var pastef = function(){
+					// Send POST request to the API with the content of a text field
+					$.post(URL, $("#clipboard").val(), function(data, status){
+						console.log("Paste, data: " + data + "\nStatus: " + status);
+						$("#log").val(data)
+					});
+				};
 
+				var copyf = function(){
+					// Send get request to the API and present response
+					$.get(URL, function(data, status){
+						if (status === "success") {
+							$("#clipboard").val(data)
+						}
+						console.log("Copy, data: " + data + "\nStatus: " + status);
+						$("#log").val(data)
+					});
+				};
+				$("#paste").click(pastef);
+				$("#paste").on("tap", pastef);
+				$("#copy").click(copyf);
+				$("#copy").on("tap", copyf);
+			});
+		</script>
 	</head>
 	<body>
 		<h1>REALCLIPPER</h1>
 		<p>This is the best thing every</p>
+
+
+		<button id="copy">COPY</button><br>
+
+		Clipboard: <input type="text" id="clipboard">
+		<button id="paste">PASTE</button>
+		<br>
+		Log: <input type="text" id="log">
+
 	</body>
 </html>
