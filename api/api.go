@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/go-martini/martini"
+	"github.com/martini-contrib/cors"
 	"log"
 	"net/http"
 	"os"
@@ -33,6 +34,9 @@ func PasteClipboard(w http.ResponseWriter, r *http.Request) {
 func main() {
 	m := martini.Classic()
 	//http.HandleFunc("/realclipper/api/clipboard", handler)
+	m.Use(cors.Allow(&cors.Options{
+		AllowOrigins: []string{"http://localhost:8080"},
+	  }))
 	m.Group("/realclipper/api/clipboard", ClipboardGroup)
 	env_port := os.Getenv("REALCLIPPER_API_PORT")
 	if env_port == "" {
