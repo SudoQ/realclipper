@@ -36,7 +36,7 @@ func main() {
 	//http.HandleFunc("/realclipper/api/clipboard", handler)
 	m.Use(cors.Allow(&cors.Options{
 		AllowOrigins: []string{"http://*:8080"},
-		AllowMethods: []string{"PUT", "PATCH"},
+		AllowMethods: []string{"GET", "POST"},
 	}))
 	m.Group("/realclipper/api/clipboard", ClipboardGroup)
 	env_port := os.Getenv("REALCLIPPER_API_PORT")
