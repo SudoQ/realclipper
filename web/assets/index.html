@@ -8,7 +8,10 @@
 		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 		<script>
 			$(function(){
-				var URL ="http://192.168.1.94:4041/realclipper/api/clipboard";
+				//alert(window.location.protocol + "//" + window.location.hostname + ":4041/realclipper/api/clipboard");
+				var URL = window.location.protocol + "//" + window.location.hostname + ":4041/realclipper/api/clipboard"
+
+				//var URL ="http://192.168.1.94:4041/realclipper/api/clipboard";
 				var pastef = function(){
 					// Send POST request to the API with the content of a text field
 					$("#log").val("PASTE")
