@@ -41,7 +41,7 @@ func main() {
 	m.Group("/realclipper/api/clipboard", ClipboardGroup)
 	env_port := os.Getenv("REALCLIPPER_API_PORT")
 	if env_port == "" {
-		env_port = "8080"
+		env_port = "4041"
 	}
 	port := fmt.Sprintf(":%s", env_port)
 	log.Fatal(http.ListenAndServe(port, m))
