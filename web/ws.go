@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/go-martini/martini"
 	"fmt"
+	"github.com/go-martini/martini"
 	"log"
 	"net/http"
 	"os"
