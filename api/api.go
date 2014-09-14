@@ -35,9 +35,9 @@ func main() {
 	m := martini.Classic()
 	//http.HandleFunc("/realclipper/api/clipboard", handler)
 	m.Use(cors.Allow(&cors.Options{
-		AllowOrigins: []string{"http://localhost:8080", "http://192.168.1.94:8080"},
-		//AllowOrigins: []string{"http://192.168.1.*:8080"},
-	  }))
+		AllowOrigins: []string{"http://*:8080"},
+		AllowMethods: []string{"PUT", "PATCH"},
+	}))
 	m.Group("/realclipper/api/clipboard", ClipboardGroup)
 	env_port := os.Getenv("REALCLIPPER_API_PORT")
 	if env_port == "" {
