@@ -8,9 +8,10 @@
 		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 		<script>
 			$(function(){
-				var URL ="http://localhost:4041/realclipper/api/clipboard";
+				var URL ="http://192.168.1.94:4041/realclipper/api/clipboard";
 				var pastef = function(){
 					// Send POST request to the API with the content of a text field
+					$("#log").val("PASTE")
 					$.post(URL, $("#clipboard").val(), function(data, status){
 						console.log("Paste, data: " + data + "\nStatus: " + status);
 						$("#log").val(data)
@@ -19,6 +20,7 @@
 
 				var copyf = function(){
 					// Send get request to the API and present response
+					$("#log").val("COPY")
 					$.get(URL, function(data, status){
 						if (status === "success") {
 							$("#clipboard").val(data)
@@ -27,10 +29,14 @@
 						$("#log").val(data)
 					});
 				};
-				$("#paste").click(pastef);
-				$("#paste").on("tap", pastef);
-				$("#copy").click(copyf);
-				$("#copy").on("tap", copyf);
+
+				$("#paste").on("click touchstart", function(){
+					pastef()
+				});
+
+				$("#copy").on("click touchstart", function(){
+					copyf()
+				});
 			});
 		</script>
 	</head>
