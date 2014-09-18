@@ -112,55 +112,52 @@
 
 				var pastef = function(){
 					// Send POST request to the API with the content of a text field
-					$("#log").val("PASTE")
 					$.post(URL, $("#clipboard").val(), function(data, status){
 						console.log("Paste, data: " + data + "\nStatus: " + status);
-						$("#log").val(data)
 					});
 				};
-				/*
+
 				var copyf = function(){
 					// Send get request to the API and present response
-					$("#log").val("COPY")
 					$.get(URL, function(data, status){
 						if (status === "success") {
 							$("#clipboard").val(data)
 						}
 						console.log("Copy, data: " + data + "\nStatus: " + status);
-						$("#log").val(data)
 					});
-					};
-				 */
+				};
+
 
 				$("#paste").on("click touchstart", function(){
 					pastef()
 				});
+
+				$("#copy").on("click touchstart", function(){
+					copyf()
+				});
+
+				function getClipboard(){
+					var result = null
+					$.ajax({
+							url: URL,
+							type: 'get',
+							dataType: 'html',
+							async: false,
+							success: function(data) {
+								result = data;
+							}
+					});
+					return result
+				}
 
 				var client = new ZeroClipboard(document.getElementById("copy") );
 				client.on( "ready", function( readyEvent ) {
 					client.on( "copy", function (event) {
 					  var clipboard = event.clipboardData;
 					  // Send a GET request to the API here
-						var result = null
-						$.ajax({
-								url: URL,
-								type: 'get',
-								dataType: 'html',
-								async: false,
-								success: function(data) {
-									result = data;
-								}
-						});
-						/*
-					  $.get(URL, function(data, status){
-							if (status === "success") {
-								$("#clipboard").val(data)
-								}
-							console.log("Copy, data: " + data + "\nStatus: " + status);
-							//clipboard.setData("text/plain", data);
-							});
-							*/
-						clipboard.setData( "text/plain", result );
+					  clipboardtext = getClipboard()
+					  clipboard.setData( "text/plain", clipboardtext);
+					  console.log("Copied " + clipboardtext + " to the clipboard")
 					  //clipboard.setData( "text/html", "<b>Copy me!</b>" );
 					  //clipboard.setData( "application/rtf", "{\\rtf1\\ansi\n{\\b Copy me!}}" );
 					});
