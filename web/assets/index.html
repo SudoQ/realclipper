@@ -70,9 +70,12 @@
         <h1>Realclipper</h1>
 	</div>
 
-      <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body > .container</code>.</p>
-      <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
-	<button class="btn btn-primary" id="copy"> COPY </button>
+	<!--
+	<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body > .container</code>.</p>
+	<p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
+	-->
+
+	<button class="btn btn-primary" data-clipboard-text="Copy Me!" id="copy"> COPY </button>
 	<div class="row">
 	  <div class="col-lg-6">
 		<div class="input-group">
@@ -100,6 +103,9 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
+	<!-- Zeroclipboard -->
+	<script src="dist/ZeroClipboard.js"></script>
+
 		<script>
 			$(function(){
 				var URL = window.location.protocol + "//" + window.location.hostname + ":4041/realclipper/api/clipboard"
@@ -112,7 +118,7 @@
 						$("#log").val(data)
 					});
 				};
-
+				/*
 				var copyf = function(){
 					// Send get request to the API and present response
 					$("#log").val("COPY")
@@ -123,16 +129,45 @@
 						console.log("Copy, data: " + data + "\nStatus: " + status);
 						$("#log").val(data)
 					});
-				};
+					};
+				 */
 
 				$("#paste").on("click touchstart", function(){
 					pastef()
 				});
 
-				$("#copy").on("click touchstart", function(){
-					copyf()
-				});
+				var client = new ZeroClipboard(document.getElementById("copy") );
+				client.on( "ready", function( readyEvent ) {
+					client.on( "copy", function (event) {
+					  var clipboard = event.clipboardData;
+					  // Send a GET request to the API here
+						var result = null
+						$.ajax({
+								url: URL,
+								type: 'get',
+								dataType: 'html',
+								async: false,
+								success: function(data) {
+									result = data;
+								}
+						});
+						/*
+					  $.get(URL, function(data, status){
+							if (status === "success") {
+								$("#clipboard").val(data)
+								}
+							console.log("Copy, data: " + data + "\nStatus: " + status);
+							//clipboard.setData("text/plain", data);
+							});
+							*/
+						clipboard.setData( "text/plain", result );
+					  //clipboard.setData( "text/html", "<b>Copy me!</b>" );
+					  //clipboard.setData( "application/rtf", "{\\rtf1\\ansi\n{\\b Copy me!}}" );
+					});
+				} );
+
 			});
+
 		</script>
   </body>
 </html>
